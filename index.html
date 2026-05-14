@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>automaktab.uz — Texnik ishlar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --red: #E8192C;
+    --red-dark: #B0111F;
+    --dark: #0D0D0D;
+    --dark2: #161616;
+    --dark3: #1E1E1E;
+    --muted: #888;
+    --white: #F5F5F0;
+    --border: rgba(255,255,255,0.08);
+  }
+
+  html, body {
+    height: 100%;
+    background: var(--dark);
+    color: var(--white);
+    font-family: 'Manrope', sans-serif;
+    overflow-x: hidden;
+  }
+
+  body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  /* Background grid */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Red glow top */
+  body::after {
+    content: '';
+    position: fixed;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 400px;
+    background: radial-gradient(ellipse, rgba(232,25,44,0.15) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 680px;
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0;
+  }
+
+  /* Logo bar */
+  .logo-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 4rem;
+    padding: 10px 20px;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    background: rgba(255,255,255,0.03);
+  }
+
+  .logo-icon {
+    width: 28px;
+    height: 28px;
+    background: var(--red);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .logo-icon svg {
+    width: 16px;
+    height: 16px;
+    fill: white;
+  }
+
+  .logo-text {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: var(--white);
+  }
+
+  .logo-text span {
+    color: var(--red);
+  }
+
+  /* Status badge */
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(232,25,44,0.12);
+    border: 1px solid rgba(232,25,44,0.3);
+    border-radius: 100px;
+    padding: 6px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #FF4D5E;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+
+  .status-dot {
+    width: 7px;
+    height: 7px;
+    background: #FF4D5E;
+    border-radius: 50%;
+    animation: pulse 1.8s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.7); }
+  }
+
+  /* Main heading */
+  h1 {
+    font-family: 'Unbounded', sans-serif;
+    font-size: clamp(2.8rem, 8vw, 5.5rem);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: var(--white);
+    margin-bottom: 0.6rem;
+  }
+
+  h1 .accent {
+    color: var(--red);
+    display: block;
+  }
+
+  /* Subtitle */
+  .subtitle {
+    font-size: 1.05rem;
+    color: var(--muted);
+    line-height: 1.6;
+    max-width: 400px;
+    margin: 1.5rem auto 3rem;
+  }
+
+  /* Divider */
+  .divider {
+    width: 40px;
+    height: 2px;
+    background: var(--red);
+    margin: 0 auto 3rem;
+    border-radius: 2px;
+  }
+
+  /* Info card */
+  .info-card {
+    width: 100%;
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .info-card-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.6rem;
+  }
+
+  .info-card-value {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--white);
+    line-height: 1.5;
+  }
+
+  /* Contact section */
+  .contact-section {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  .contact-card {
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-align: left;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: border-color 0.2s, background 0.2s;
+    cursor: pointer;
+  }
+
+  .contact-card:hover {
+    border-color: rgba(232,25,44,0.4);
+    background: rgba(232,25,44,0.05);
+  }
+
+  .contact-card-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: rgba(232,25,44,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 4px;
+  }
+
+  .contact-card-icon svg {
+    width: 18px;
+    height: 18px;
+    stroke: var(--red);
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .contact-card-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .contact-card-value {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--white);
+  }
+
+  /* Road animation at bottom */
+  .road-wrap {
+    width: 100%;
+    overflow: hidden;
+    opacity: 0.25;
+    margin-top: 1rem;
+  }
+
+  .road {
+    width: 100%;
+    height: 40px;
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .road-line {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 3px;
+    width: 100%;
+    background: repeating-linear-gradient(
+      90deg,
+      var(--white) 0px,
+      var(--white) 30px,
+      transparent 30px,
+      transparent 60px
+    );
+    animation: road-scroll 1.2s linear infinite;
+  }
+
+  @keyframes road-scroll {
+    from { background-position: 0 0; }
+    to { background-position: -60px 0; }
+  }
+
+  /* Footer */
+  .footer {
+    margin-top: 3rem;
+    font-size: 12px;
+    color: rgba(255,255,255,0.2);
+    letter-spacing: 0.05em;
+  }
+
+  @media (max-width: 480px) {
+    .contact-section { grid-template-columns: 1fr; }
+    h1 { font-size: 2.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Logo -->
+  <div class="logo-bar">
+    <div class="logo-icon">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 11l2-2 4-4 4 1 5 5v6H3V11z"/>
+        <circle cx="7" cy="18" r="2"/>
+        <circle cx="16" cy="18" r="2"/>
+      </svg>
+    </div>
+    <div class="logo-text">auto<span>maktab</span>.uz</div>
+  </div>
+
+  <!-- Status -->
+  <div class="status-badge">
+    <span class="status-dot"></span>
+    Vaqtincha ishlamaydi
+  </div>
+
+  <!-- Heading -->
+  <h1>
+    Texnik
+    <span class="accent">ishlar</span>
+  </h1>
+
+  <div class="divider"></div>
+
+  <p class="subtitle">
+    Sayt hozirda texnik ishlar sababli vaqtincha ishlamayapti.<br>
+    Tez orada qayta xizmatga kiramiz.
+  </p>
+
+  <!-- Info card -->
+  <div class="info-card">
+    <div class="info-card-label">Muammo haqida</div>
+    <div class="info-card-value">
+      Saytga kirish imkoni yo'q. Muammoni hal qilish uchun iltimos dasturchiga murojaat qiling — biz imkon qadar tezroq tuzatamiz.
+    </div>
+  </div>
+
+  <!-- Contact cards -->
+  <div class="contact-section">
+    <a class="contact-card" href="tel:+998901234567">
+      <div class="contact-card-icon">
+        <svg viewBox="0 0 24 24">
+          <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.07 1.18 2 2 0 012.06 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+        </svg>
+      </div>
+      <div class="contact-card-label">Telefon</div>
+      <div class="contact-card-value">Dasturchiga qo'ng'iroq</div>
+    </a>
+
+    <a class="contact-card" href="https://t.me/username" target="_blank">
+      <div class="contact-card-icon">
+        <svg viewBox="0 0 24 24">
+          <path d="M21.198 2.433a2.242 2.242 0 00-1.022.215l-16.5 6.75a2.25 2.25 0 00.126 4.17l4.07 1.324 1.847 5.715a.75.75 0 001.37.173l2.312-3.463 4.565 3.352a2.25 2.25 0 003.464-1.49l2.95-14.7a2.25 2.25 0 00-2.182-2.046z"/>
+        </svg>
+      </div>
+      <div class="contact-card-label">Telegram</div>
+      <div class="contact-card-value">@dasturchi</div>
+    </a>
+  </div>
+
+  <!-- Road animation -->
+  <div class="road-wrap">
+    <div class="road">
+      <div class="road-line"></div>
+    </div>
+  </div>
+
+  <div class="footer">automaktab.uz &nbsp;·&nbsp; barcha huquqlar himoyalangan</div>
+
+</div>
+
+</body>
+</html>
